@@ -1,0 +1,17 @@
+classes:
+  - motd
+motd::motd_content: "hello machine"
+
+ntp::servers: ['NTP-SERVER-01.XXX.Scottish_Power', 'NTP-SERVER-02.XXX.Scottish_Power',
+                'NTP-SERVER-03.XXX.Scottish_Power','NTP-SERVER-04.XXX.Scottish_Power']
+
+ntp::restrict: ['restrict default ignore',
+                'restrict 127.0.0.1 nomodify no trap',
+                'NTP-SERVER-01.XXX.Scottish_Power nomodify notrap',
+                'NTP-SERVER-02.XXX.Scottish_Power nomodify notrap',
+                'NTP-SERVER-03.XXX.Scottish_Power nomodify notrap',
+                'NTP-SERVER-04.XXX.Scottish_Power nomodify notrap',]
+
+
+timezone::timezone: 'Europe/London'
+timezone::hwutc: 'true'
