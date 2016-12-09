@@ -2,9 +2,8 @@ classes:
   - motd
 motd::motd_content: "hello machine"
 
-ntp::servers: ['NTP-SERVER-01.XXX.Scottish_Power', 'NTP-SERVER-02.XXX.Scottish_Power',
-                'NTP-SERVER-03.XXX.Scottish_Power','NTP-SERVER-04.XXX.Scottish_Power']
 
+ntp::servers: ['10.10.188.41', '10.9.118.128', '10.9.118.129' ]
 ntp::restrict: ['restrict default ignore',
                 'restrict 127.0.0.1 nomodify no trap',
                 'NTP-SERVER-01.XXX.Scottish_Power nomodify notrap',
@@ -15,3 +14,80 @@ ntp::restrict: ['restrict default ignore',
 
 timezone::timezone: 'Europe/London'
 timezone::hwutc: 'true'
+
+locales::lang: 'en_GB.UTF-8'
+
+rsyslog::client::log_remote: 'true'
+rsyslog::client::log_local: 'true'
+rsyslog::client::remote_servers: [{ host: 'HOSTNAME', port: '514'}, { host: 'HOSTNAME', port: '514'}]
+
+resolv_conf::nameservers: ['10.9.118.128','10.9.118.129']
+#resolv_conf::searchpath: "%{::domain}"
+#resolv_conf::options: ['timeout:1','attempts:1','rotate']
+
+sysctl::base::purge: 'true'
+sysctl::base::values:
+ net.ipv4.ip_forward:
+  value: '0'
+ net.bridge.bridge-nf-call-ip6tables:
+  value: '0'
+ net.bridge.bridge-nf-call-iptables:
+  value: '0'
+ net.bridge.bridge-nf-call-arptables:
+  value: '0'
+ kernel.msgmnb:
+  value: '65536'
+ kernel.msgmax:
+  value: '65536'
+ kernel.shmmax:
+  value: '68719476736'
+ kernel.shmall:
+  value: '4294967296'
+ kernel.exec-shield:
+  value: '1'
+ kernel.sysrq:
+  value: '1'
+ kernel.panic_on_unrecovered_nmi:
+  value: '1'
+ kernel.unknown_nmi_panic:
+  value: '1'
+ kernel.core_pattern:
+  value: '/var/cores/core_%h_%e_%u_%g_%t_%p'
+ kernel.printk:
+  value: '3 4 1 7'
+ vm.swappiness:
+  value: '10'
+ net.ipv4.tcp_timestamps:
+  value: '0'
+ net.ipv4.tcp_syncookies:
+  value: '1'
+ net.ipv4.ip_forward:
+  value: '0'
+ net.ipv4.icmp_echo_ignore_broadcasts:
+  value: '1'
+ net.ipv4.conf.all.rp_filter:
+  value: '0'
+ net.ipv4.conf.default.rp_filter:
+  value: '0'
+ net.ipv4.conf.all.accept_redirects:
+  value: '0'
+ net.ipv4.conf.default.accept_redirects:
+  value: '0'
+ net.ipv4.conf.all.send_redirects:
+  value: '0'
+ net.ipv4.conf.default.send_redirects:
+  value: '0'
+ net.ipv4.conf.all.accept_source_route:
+  value: '0'
+ net.ipv4.conf.default.accept_source_route:
+  value: '0'
+ net.ipv4.conf.all.forwarding:
+  value: '0'
+ net.ipv4.conf.default.forwarding:
+  value: '0'
+ net.ipv4.conf.all.mc_forwarding:
+  value: '0'
+ net.ipv4.conf.all.log_martians:
+  value: '0'
+ net.ipv4.conf.default.log_martians:
+  value: '0'

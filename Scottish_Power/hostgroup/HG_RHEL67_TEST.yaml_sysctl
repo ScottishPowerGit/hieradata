@@ -1,0 +1,48 @@
+classes:
+  - motd
+motd::motd_content: "hello machine"
+
+
+
+
+iptables::rule: ['allow-outbound-smtp-to-authorized-servers']
+iptables::rule::comment: ['only allow smtp to our internal mail servers']
+iptables::rule::order: ['500']
+iptables::rule::destination_port: ['25']
+iptables::rule::protocol: 'tcp'
+iptables::rule::destination: ['10.0.10.10,10.0.10.11,2001:db8:1001::10/126']
+iptables::rule::action: 'ACCEPT'
+iptables::rule::chain: 'OUTPUT'
+
+
+ntp::servers: ['10.10.188.41', '10.9.118.128', '10.9.118.129' ]
+ntp::restrict: ['restrict default ignore',
+                'restrict 127.0.0.1 nomodify no trap',
+                'NTP-SERVER-01.XXX.Scottish_Power nomodify notrap',
+                'NTP-SERVER-02.XXX.Scottish_Power nomodify notrap',
+                'NTP-SERVER-03.XXX.Scottish_Power nomodify notrap',
+                'NTP-SERVER-04.XXX.Scottish_Power nomodify notrap',]
+
+
+timezone::timezone: 'Europe/London'
+timezone::hwutc: 'true'
+
+resolv_conf::nameservers: [ '10.9.118.128','10.9.118.129']
+#resolv_conf::searchpath: "%{::domain}"
+resolv_conf::options: ['timeout:1','attempts:1','rotate']
+
+locales::lang: 'en_GB.UTF-8'
+
+rsyslog::client::log_remote: 'true'
+rsyslog::client::log_local: 'true'
+rsyslog::client::remote_servers: [{ host: 'HOSTNAME', port: '514'}, { host: 'HOSTNAME', port: '514'}]
+
+
+sysctl::base::purge: 'true'
+sysctl::base::values:
+ net.ipv4.ip_forward:
+    value: '1'
+  net.core.somaxconn:
+    value: '65536'
+  vm.swappiness:
+    ensure: absent
