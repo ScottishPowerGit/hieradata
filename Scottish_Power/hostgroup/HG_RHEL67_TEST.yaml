@@ -1,5 +1,6 @@
 classes:
-  - motd
+  - role::base
+#  - motd
 motd::motd_content: "hello machine"
 
 
@@ -21,9 +22,10 @@ rsyslog::client::log_remote: 'true'
 rsyslog::client::log_local: 'true'
 rsyslog::client::remote_servers: [{ host: 'HOSTNAME', port: '514'}, { host: 'HOSTNAME', port: '514'}]
 
-resolv_conf::nameservers: ['10.9.118.128','10.9.118.129']
-#resolv_conf::searchpath: "%{::domain}"
-#resolv_conf::options: ['timeout:1','attempts:1','rotate']
+resolvconf::file: 'presernt'
+resolvconf::file::nameservers: [ '128.9.49.51','128.163.133.51']
+resolvconf::searchpath: "%{::domain}"
+resolvconf::options: ['timeout:1','attempts:1','rotate']
 
 sysctl::base::purge: 'true'
 sysctl::base::values:
@@ -53,41 +55,5 @@ sysctl::base::values:
   value: '1'
  kernel.core_pattern:
   value: '/var/cores/core_%h_%e_%u_%g_%t_%p'
- kernel.printk:
-  value: '3 4 1 7'
  vm.swappiness:
   value: '10'
- net.ipv4.tcp_timestamps:
-  value: '0'
- net.ipv4.tcp_syncookies:
-  value: '1'
- net.ipv4.ip_forward:
-  value: '0'
- net.ipv4.icmp_echo_ignore_broadcasts:
-  value: '1'
- net.ipv4.conf.all.rp_filter:
-  value: '0'
- net.ipv4.conf.default.rp_filter:
-  value: '0'
- net.ipv4.conf.all.accept_redirects:
-  value: '0'
- net.ipv4.conf.default.accept_redirects:
-  value: '0'
- net.ipv4.conf.all.send_redirects:
-  value: '0'
- net.ipv4.conf.default.send_redirects:
-  value: '0'
- net.ipv4.conf.all.accept_source_route:
-  value: '0'
- net.ipv4.conf.default.accept_source_route:
-  value: '0'
- net.ipv4.conf.all.forwarding:
-  value: '0'
- net.ipv4.conf.default.forwarding:
-  value: '0'
- net.ipv4.conf.all.mc_forwarding:
-  value: '0'
- net.ipv4.conf.all.log_martians:
-  value: '0'
- net.ipv4.conf.default.log_martians:
-  value: '0'
